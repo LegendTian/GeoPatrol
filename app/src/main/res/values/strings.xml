@@ -1,0 +1,45 @@
+<resources>
+    <string name="app_name">巡检系统</string>
+    <string name="action_settings">设置</string>
+    <string name="record_post">上报</string>
+    <!-- 图片浏览 -->
+    <string name="only_choose_num">超出可选图片张数</string>
+    <string name="finish">完成</string>
+    <string name="invalidSD">sdcard无效或没有插入！</string>
+    <string name="photo">选择相册</string>
+    <string name="album">相册</string>
+    <string name="preview">预览</string>
+    <string name="unfinished">完成</string>
+    <string name="camera_cancel">取消</string>
+    <string name="no_photo">相册没有图片</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="title_activity_home">GPS巡检客户端</string>
+    <string name="title_activity_login">用户登录</string>
+    <string name="title_activity_post_patrol">巡检上报</string>
+    <string name="title_activity_records">上报记录</string>
+    <string name="title_activity_task">巡检任务</string>
+    <string name="title_activity_message">消息通知</string>
+    <string name="exit_application">退出</string>
+    <string name="gps_loading">正在获取GPS信息...</string>
+    <string name="record_date">当前时间：</string>
+
+    <string name="dummy_button">Dummy Button</string>
+    <string name="dummy_content">DUMMY\nCONTENT</string>
+    <string name="copyright">Copyright © 2015-2020 GIS巡检客户端</string>
+    <string name="app_title">线路巡检</string>
+    <string name="ftp_server">http://192.168.9.100/</string>
+    <string name="dfs_server">http://192.168.9.100:8080/dfs/resfile/</string>
+    <string name="app_server">http://192.168.9.100:8080/patrolservice/</string>
+    <string name="xy2jpm">http://192.168.9.100:6080/arcgis/rest/services/APDM/BasicInfoService/MapServer/exts/NearestStationRestSOE/XY2JPMOperation</string>
+    <string name="locate_line">http://192.168.9.100:6080/arcgis/rest/services/APDM/BasicInfoService/MapServer/exts/LineReferencingRestSOE/LocateLineOperation</string>
+
+    <!-- 用户信息 -->
+    <string name="employeeID">8575A668-2686-11E3-9E54-00216A3749B4</string>
+    <string name="employeeName">白宝根</string>
+    <string name="tel">15234000462</string>
+    <string name="sectorID">15E53344-266D-11E3-8C98-00216A3749B4</string>
+    <string name="instrumentID">D0346060-F5EB-11E3-ABB8-6CAE8B782A58</string>
+    <string name="deviceCode">8010</string>
+    <string name="pipelineID">705D0C85-11AE-4E2E-8891-0C8D447860FC</string>
+</resources>

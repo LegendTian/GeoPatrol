@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:orientation="horizontal"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content">
+
+    <TextView
+            android:id="@+id/dateJPMTextView"
+            android:layout_weight="2"
+            android:gravity="center"
+            android:text="位置"
+            android:layout_width="0dp"
+            android:layout_height="45dp"/>
+
+
+    <TextView
+            android:id="@+id/dateLevelTextView"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="级别"
+            android:layout_width="0dp"
+            android:layout_height="45dp"/>
+
+    <TextView
+            android:id="@+id/dateInfoTextView"
+            android:layout_weight="3"
+            android:gravity="center"
+            android:text="描述"
+            android:layout_width="0dp"
+            android:layout_height="45dp"/>
+        <TextView
+            android:id="@+id/dateTimeTextView"
+            android:layout_weight="2"
+            android:gravity="center"
+            android:text="时间"
+            android:layout_width="0dp"
+            android:layout_height="45dp"/>
+
+        <TextView
+            android:id="@+id/dateStateTextView"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="状态"
+            android:layout_width="0dp"
+            android:layout_height="45dp"/>
+
+</LinearLayout>
