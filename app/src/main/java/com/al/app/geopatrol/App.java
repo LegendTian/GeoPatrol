@@ -9,7 +9,7 @@ import com.esri.android.runtime.ArcGISRuntime;
 public class App extends Application {
 
     static {
-        System.loadLibrary("geoPatrolss");
+        System.loadLibrary("geoPatrol");
     }
 
     private static boolean startup = false;
