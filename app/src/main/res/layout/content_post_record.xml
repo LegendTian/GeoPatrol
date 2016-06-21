@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/record_post_view"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:context="com.al.app.geopatrol.activitys.PostPatrolActivity"
+    tools:showIn="@layout/activity_post_patrol">
+
+    <LinearLayout
+
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="150dp">
+            <EditText
+                android:id="@+id/exception_info"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:layout_marginTop="10dp"
+                android:layout_marginLeft="15dp"
+                android:gravity="left|top"
+                android:hint="巡检情况描述"
+                android:background="@null"
+                android:textSize="14sp">
+            </EditText>
+
+
+        </RelativeLayout>
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <GridView
+                android:id="@+id/noScrollgridview"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="15dp"
+                android:horizontalSpacing="3dp"
+                android:numColumns="4"
+                android:scrollbars="none"
+                android:verticalSpacing="5dp" >
+            </GridView>
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"
+            android:layout_weight="1">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/gps_info"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:drawablePadding="5dp"
+                android:drawableLeft="@drawable/location_icon"
+                android:text="@string/gps_loading"
+                android:layout_weight="1.25"
+                android:textSize="12sp" />
+
+            <TextView
+                android:id="@+id/tv_value"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@drawable/shape_help_category_tv_bg"
+                android:drawableRight="@mipmap/icon_down"
+                android:padding="8dp"
+                android:textColor="@color/content_color"
+                android:text="预警级别"
+                android:textSize="14sp"/>
+            </LinearLayout>
+        </RelativeLayout>
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"
+            android:layout_weight="1">
+
+            <TextView
+                android:id="@+id/recordDate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+
+                android:drawablePadding="4dp"
+                android:drawableLeft="@drawable/date_icon"
+                android:text="@string/record_date"
+
+                android:textSize="12sp" />
+
+        </RelativeLayout>
+
+
+    </LinearLayout>
+</RelativeLayout>

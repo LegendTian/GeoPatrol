@@ -1,0 +1,54 @@
+apply plugin: 'com.android.application'
+
+android {
+    compileSdkVersion 23
+    buildToolsVersion "23.0.2"
+
+    defaultConfig {
+        applicationId "com.al.app.geopatrol"
+        minSdkVersion 15
+        targetSdkVersion 17
+        versionCode 1
+        versionName "1.0"
+        multiDexEnabled true
+        ndk {
+            moduleName "geoPatrol"
+            cFlags "-DANDROID_NDK"
+            ldLibs "EGL", "GLESv3", "dl", "log"
+            stl "stlport_shared"
+        }
+
+    }
+    sourceSets.main {
+        jniLibs.srcDir 'src/main/jni/libs' // <-- Set your folder here!
+        jni.srcDirs 'src/main/jni'
+    }
+    packagingOptions {
+        exclude 'META-INF/LICENSE.txt'
+        exclude 'META-INF/LICENSE'
+        exclude 'META-INF/LGPL2.1'
+        exclude 'META-INF/NOTICE'
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+    productFlavors {
+    }
+}
+
+dependencies {
+    compile fileTree(dir: 'libs', include: ['*.jar'])
+    testCompile 'junit:junit:4.12'
+    compile 'com.android.support:appcompat-v7:23.2.1'
+    compile 'com.android.support:design:23.2.1'
+    compile 'com.android.support:support-v4:23.2.1'
+    compile 'de.greenrobot:eventbus:2.4.0'
+    compile 'com.google.guava:guava:19.0'
+    compile 'com.android.volley:volley:1.0.0'
+    compile 'com.esri.arcgis.android:arcgis-android:10.2.7'
+    compile 'com.github.bumptech.glide:glide:3.6.1'
+    compile 'com.jakewharton:disklrucache:2.0.2'
+}
