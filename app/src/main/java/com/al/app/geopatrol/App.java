@@ -5,13 +5,11 @@ import android.app.Application;
 import com.al.app.geopatrol.services.BootBroadcastReceiver;
 import com.esri.android.runtime.ArcGISRuntime;
 
-/**
- * Created by Dai Jingjing on 2016/1/19.
- */
+
 public class App extends Application {
 
     static {
-        System.loadLibrary("geoPatrol");
+        System.loadLibrary("geoPatrolss");
     }
 
     private static boolean startup = false;
