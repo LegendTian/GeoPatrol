@@ -43,6 +43,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.view.ViewGroup.LayoutParams;
+import android.view.Window;
 import android.view.animation.AnimationUtils;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
@@ -92,6 +93,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
+import java.lang.reflect.Method;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -244,22 +246,82 @@ public class PostPatrolActivity extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.menu_record_post, menu);
+        inflater.inflate(R.menu.menu_post_type, menu);
+
         return super.onCreateOptionsMenu(menu);
     }
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-            case R.id.action_record_post:
+            case R.id.post_type_ck:
 
+                Toast.makeText(this, Res.getString("post_ck"), Toast.LENGTH_SHORT).show();
+                //new SendRecordsAsyncTask().execute();
+
+                return true;
+            case R.id.post_type_sb:
+
+                Toast.makeText(this, Res.getString("post_s"), Toast.LENGTH_SHORT).show();
                 new SendRecordsAsyncTask().execute();
 
                 return true;
+            case R.id.post_type_w:
 
+                Toast.makeText(this, Res.getString("post_w"), Toast.LENGTH_SHORT).show();
+                new SendRecordsAsyncTask().execute();
+
+                return true;
+            case R.id.post_type_sz:
+
+                Toast.makeText(this, Res.getString("post_z"), Toast.LENGTH_SHORT).show();
+                new SendRecordsAsyncTask().execute();
+
+                return true;
+            case R.id.post_type_qt:
+
+                Toast.makeText(this, Res.getString("post_qt"), Toast.LENGTH_SHORT).show();
+                new SendRecordsAsyncTask().execute();
+
+                return true;
+            case R.id.post_type_wz:
+
+                Toast.makeText(this, Res.getString("post_wz"), Toast.LENGTH_SHORT).show();
+                new SendRecordsAsyncTask().execute();
+
+                return true;
+            case R.id.post_type_sg:
+
+                Toast.makeText(this, Res.getString("post_sg"), Toast.LENGTH_SHORT).show();
+                new SendRecordsAsyncTask().execute();
+
+                return true;
             default:
                 return super.onOptionsItemSelected(item);
         }
     }
+
+
+    @Override
+    public boolean onMenuOpened(int featureId, Menu menu) {
+        System.out.println("onMenuOpened");
+        System.out.println("featureId");
+        System.out.println(featureId);
+        System.out.println(Window.FEATURE_ACTION_BAR);
+        System.out.println(Window.FEATURE_OPTIONS_PANEL);
+        if ( menu != null) {
+            System.out.println(menu.getClass().getSimpleName().toString());
+            if (menu.getClass().getSimpleName().equals("MenuBuilder")) {
+                try {
+                    Method m = menu.getClass().getDeclaredMethod("setOptionalIconsVisible", Boolean.TYPE);
+                    m.setAccessible(true);
+                    m.invoke(menu, true);
+                } catch (Exception e) {
+                }
+            }
+        }
+        return super.onMenuOpened(featureId, menu);
+    }
+
     @Override
     public void onBackPressed() {
         super.onBackPressed();

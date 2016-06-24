@@ -2,6 +2,13 @@
     <string name="app_name">巡检系统</string>
     <string name="action_settings">设置</string>
     <string name="record_post">上报</string>
+    <string name="post_ck">穿跨越</string>
+    <string name="post_s">水工保护</string>
+    <string name="post_w">风险源</string>
+    <string name="post_sg">第三方施工</string>
+    <string name="post_wz">违章占压</string>
+    <string name="post_z">三桩一牌</string>
+    <string name="post_qt">其他</string>
     <!-- 图片浏览 -->
     <string name="only_choose_num">超出可选图片张数</string>
     <string name="finish">完成</string>

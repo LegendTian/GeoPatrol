@@ -55,6 +55,7 @@ import com.esri.core.geometry.Polyline;
 import com.esri.core.map.Graphic;
 import com.esri.core.symbol.SimpleLineSymbol;
 import com.esri.core.symbol.SimpleMarkerSymbol;
+import com.esri.core.symbol.TextSymbol;
 
 import org.codehaus.jackson.JsonFactory;
 import org.codehaus.jackson.JsonParseException;
@@ -442,7 +443,12 @@ public class TaskActivity extends AppCompatActivity {
             double px=(double)p.get("X");
             double py=(double)p.get("Y");
             Graphic graphic =new Graphic(new Point(px,py),new SimpleMarkerSymbol(Color.RED, 10, SimpleMarkerSymbol.STYLE.CIRCLE),p);
-
+            TextSymbol ts=new TextSymbol(12,p.get("PointName").toString(),Color.RED);
+            ts.setFontFamily("NotoSansHans-Regular.otf");
+            //ts.setFontFamily("DroidSansFallback.ttf");
+            ts.setOffsetX(-10); ts.setOffsetY(5);
+            Graphic textGraphic=new Graphic(new Point(px,py),ts);
+            taskLayer.addGraphic(textGraphic);
             taskLayer.addGraphic(graphic);
             /*if(x_min==0&&x_max==0&&y_min==0&&y_max==0){
                 x_min=x_max=px;
