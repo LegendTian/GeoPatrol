@@ -9,12 +9,15 @@ import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.al.app.geopatrol.App;
 import com.al.app.geopatrol.R;
 import com.al.app.geopatrol.services.GeoService;
 import com.al.app.geopatrol.services.TaskService;
+import com.al.app.geopatrol.utils.PatrolUtils;
+import com.al.app.geopatrol.utils.Res;
 import com.google.common.base.Strings;
 
 import java.text.SimpleDateFormat;
@@ -29,10 +32,21 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
 
     private String userinfo = null;
 
+    private LinearLayout risklayout;
+    private LinearLayout risk_showlayout ;
+    private LinearLayout recordslayout ;
+    private LinearLayout records_tasklayout ;
+
     private Button postPatrol;
     private Button recordsDiv;
     private Button taskBtn;
     private Button messageDiv;
+
+    private Button postRisk;
+    private Button riskTrack;
+    private Button risks;
+    private Button riskMessage;
+
     private Button exitDiv;
 
 
@@ -41,6 +55,7 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
         super.onCreate(savedInstanceState);
 
         App.setStartup();
+        Res.init(this);
 
         if (savedInstanceState != null) {
             userinfo = savedInstanceState.getString("userinfo");
@@ -60,6 +75,12 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
         setSupportActionBar(toolbar);
         //toolbar.setLogo(R.mipmap.ic_launcher);
 
+        risklayout = (LinearLayout)findViewById(R.id.risk_layout);
+        risk_showlayout = (LinearLayout)findViewById(R.id.risk_show_layout);
+        recordslayout = (LinearLayout)findViewById(R.id.records_layout);
+        records_tasklayout = (LinearLayout)findViewById(R.id.records_task_layout);
+
+
         EventBus.getDefault().register(this);
 
         startService(new Intent(this, GeoService.class));
@@ -69,13 +90,42 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
         recordsDiv=(Button) findViewById(R.id.records_div);
         taskBtn=(Button) findViewById(R.id.task_btn);
         messageDiv=(Button) findViewById(R.id.message_div);
-        exitDiv=(Button) findViewById(R.id.exit_div);
         postPatrol.setOnClickListener(this);
         recordsDiv.setOnClickListener(this);
         taskBtn.setOnClickListener(this);
         messageDiv.setOnClickListener(this);
+
+        postRisk=(Button) findViewById(R.id.post_risk_div);
+        riskTrack=(Button) findViewById(R.id.risk_track_div);
+        risks=(Button) findViewById(R.id.risks_div);
+        riskMessage=(Button) findViewById(R.id.risk_message_div);
+        postRisk.setOnClickListener(this);
+        riskTrack.setOnClickListener(this);
+        risks.setOnClickListener(this);
+        riskMessage.setOnClickListener(this);
+
+        exitDiv=(Button) findViewById(R.id.exit_div);
         exitDiv.setOnClickListener(this);
 
+
+        switch (Res.getString("permissionFlag")){
+            case "1":
+                recordslayout.setVisibility(View.VISIBLE);
+                records_tasklayout.setVisibility(View.VISIBLE);
+                risklayout.setVisibility(View.GONE);
+                risk_showlayout.setVisibility(View.GONE);
+                break;
+            case "2":
+                recordslayout.setVisibility(View.GONE);
+                records_tasklayout.setVisibility(View.GONE);
+                risklayout.setVisibility(View.VISIBLE);
+                risk_showlayout.setVisibility(View.VISIBLE);
+                break;
+            default:
+                break;
+        }
+
+        PatrolUtils.init();
     }
 
     @Override
@@ -104,6 +154,19 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
             case R.id.message_div:
                 startActivityForResult(new Intent(this, RecordsActivity.class), 2);
                 break;
+            case R.id.post_risk_div:
+                startActivityForResult(new Intent(this, PostRiskActivity.class), 2);
+                break;
+            case R.id.risk_track_div:
+                startActivityForResult(new Intent(this, TrackRiskActivity.class), 2);
+                break;
+            case R.id.risks_div:
+                startActivityForResult(new Intent(this, TaskActivity.class), 2);
+                break;
+            case R.id.risk_message_div:
+                startActivityForResult(new Intent(this, RecordsActivity.class), 2);
+                break;
+
             case R.id.exit_div:
                 onExitApplicatioin(v);
                 break;

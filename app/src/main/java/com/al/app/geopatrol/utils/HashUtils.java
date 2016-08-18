@@ -1,6 +1,9 @@
 package com.al.app.geopatrol.utils;
 
 import java.security.MessageDigest;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
 import java.util.UUID;
 
 /**
@@ -45,5 +48,28 @@ public class HashUtils {
         String id = UUID.randomUUID().toString();
         id = id.replaceAll("-", "");
         return id;
+    }
+
+    public static Object keyString(HashMap<Object,Object> map,Object o)
+    {
+        Iterator<Object> it= map.keySet().iterator();
+        while(it.hasNext())
+        {
+            Object keyString=it.next();
+            if(map.get(keyString).equals(o))
+                return keyString;
+        }
+        return null;
+    }
+    public static String keyString(Map<String,String> map,String o)
+    {
+        Iterator<String> it= map.keySet().iterator();
+        while(it.hasNext())
+        {
+            String keyString=it.next();
+            if(map.get(keyString).equals(o))
+                return keyString;
+        }
+        return null;
     }
 }

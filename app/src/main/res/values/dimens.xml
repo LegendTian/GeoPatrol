@@ -6,4 +6,5 @@
     <dimen name="ui_10_dip">10dip</dimen>
     <dimen name="ui_20_dip">20dip</dimen>
     <dimen name="ui_24_dip">24dip</dimen>
+
 </resources>

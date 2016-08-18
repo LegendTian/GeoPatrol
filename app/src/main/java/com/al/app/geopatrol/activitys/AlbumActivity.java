@@ -103,8 +103,8 @@ public class AlbumActivity extends Activity {
 			System.out.println("++++++++++++++++++++++++++++++++++++++++++++++++++++++");
 			System.out.println("++++++++++++++++++++++++++++++++++++++++++++++++++++++");
 			System.out.println(mContext);
-			intent.setClass(mContext, PostPatrolActivity.class);
-			startActivity(intent);
+
+			startActivity(setClassToIntent(intent));
 			finish();
 		}
 
@@ -122,12 +122,29 @@ public class AlbumActivity extends Activity {
 	private class CancelListener implements OnClickListener {
 		public void onClick(View v) {
 			Bimp.tempSelectBitmap.clear();
-			intent.setClass(mContext, PostPatrolActivity.class);
-			startActivity(intent);
+			//intent.setClass(mContext, PostPatrolActivity.class);
+			startActivity(setClassToIntent(intent));
 		}
 	}
 
-	
+	private Intent setClassToIntent(Intent intent){
+		String activityName=getIntent().getStringExtra("activityName");
+		switch (activityName){
+			case "TrackRiskActivity":
+				intent.setClass(mContext,TrackRiskActivity.class);
+				break;
+			case "PostPatrolActivity":
+				intent.setClass(mContext,PostPatrolActivity.class);
+				break;
+			case "PostRiskActivity":
+				intent.setClass(mContext,PostRiskActivity.class);
+				break;
+			default:
+				intent.setClass(mContext,PostPatrolActivity.class);
+				break;
+		}
+		return intent;
+	}
 
 	// 初始化，给一些对象赋值
 	private void init() {

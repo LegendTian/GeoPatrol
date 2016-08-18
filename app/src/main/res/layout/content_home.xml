@@ -13,10 +13,12 @@
     tools:context="com.al.app.geopatrol.activitys.HomeActivity"
     tools:showIn="@layout/activity_home">
 
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="1">
+        android:layout_weight="1"
+        android:id="@+id/records_layout">
 
         <Button
             android:id="@+id/post_patrol_div"
@@ -46,7 +48,9 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="1">
+        android:layout_weight="1"
+        android:id="@+id/records_task_layout"
+        >
         <Button
             android:id="@+id/task_btn"
             android:layout_width="match_parent"
@@ -72,6 +76,70 @@
 
 
     </LinearLayout>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:id="@+id/risk_layout">
+
+        <Button
+            android:id="@+id/post_risk_div"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="4dp"
+            android:background="@drawable/bt_blue"
+            android:layout_weight="1"
+
+            android:textSize="@dimen/abc_text_size_medium_material"
+            android:textColor="@color/ivory"
+            android:text="@string/title_activity_risk_reporting" />
+
+        <Button
+            android:id="@+id/risk_track_div"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="4dp"
+            android:background="@drawable/bt_yellow"
+            android:layout_weight="1"
+            android:textSize="@dimen/abc_text_size_medium_material"
+            android:textColor="@color/ivory"
+            android:text="@string/title_activity_risk_track" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:id="@+id/risk_show_layout">
+        <Button
+            android:id="@+id/risks_div"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="4dp"
+            android:background="@drawable/bt_red"
+            android:layout_weight="1"
+
+            android:textSize="@dimen/abc_text_size_medium_material"
+            android:textColor="@color/ivory"
+            android:text="@string/title_activity_risks" />
+        <Button
+            android:id="@+id/risk_message_div"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/bt_green"
+            android:layout_margin="4dp"
+            android:layout_weight="1"
+            android:textSize="@dimen/abc_text_size_medium_material"
+            android:textColor="@color/ivory"
+            android:text="@string/title_activity_message" />
+
+
+
+    </LinearLayout>
+
 
     <LinearLayout
         android:layout_width="match_parent"

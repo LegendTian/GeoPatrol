@@ -72,7 +72,9 @@ public class RecordListAdapter extends BaseAdapter{
         }
 
         holder.dateJPMTextView.setText(order.getJPM());
-        holder.dateLevelTextView.setText(levelList.get(Integer.parseInt(order.getLevel())));
+        if(order.getLevel()!=null) {
+            holder.dateLevelTextView.setText(levelList.get(Integer.parseInt(order.getLevel())));
+        }
         holder.dateInfoTextView.setText(order.getException());
         holder.dateTimeTextView.setText(order.getRecordDate());
         holder.dateStateTextView.setText(stateList.get(Integer.parseInt(order.getPostState())));

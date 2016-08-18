@@ -3,6 +3,7 @@
     <item
         android:id="@+id/action_record_post"
 
+        android:textSize="20sp"
         android:title="@string/record_post"
         app:showAsAction="always" />
 

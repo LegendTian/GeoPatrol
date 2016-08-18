@@ -2,22 +2,16 @@ package com.al.app.geopatrol.activitys;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
-import android.app.Activity;
-import android.content.ContentResolver;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.BitmapFactory.Options;
 import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
-import android.inputmethodservice.Keyboard;
-import android.location.Address;
-import android.location.Geocoder;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
@@ -26,9 +20,9 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
-import android.os.Looper;
 import android.os.Message;
 import android.provider.MediaStore;
+import android.provider.MediaStore.Images.Media;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -57,23 +51,19 @@ import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
-import android.provider.MediaStore.Images.Media;
 
-import com.al.app.geopatrol.adapter.RecordListAdapter;
-import com.al.app.geopatrol.dao.XJRecordDao;
-import com.al.app.geopatrol.utils.DateUtils;
-import com.al.app.geopatrol.utils.ImageUtils;
-import com.al.app.geopatrol.utils.Res;
-import com.al.app.geopatrol.utils.SpinerPopWindow;
-import com.bumptech.glide.Glide;
 import com.al.app.geopatrol.R;
+import com.al.app.geopatrol.dao.XJRecordDao;
 import com.al.app.geopatrol.utils.Bimp;
+import com.al.app.geopatrol.utils.DateUtils;
 import com.al.app.geopatrol.utils.FileUtils;
 import com.al.app.geopatrol.utils.HttpUtils;
-import com.al.app.geopatrol.utils.DateUtils;
 import com.al.app.geopatrol.utils.ImageItem;
+import com.al.app.geopatrol.utils.ImageUtils;
 import com.al.app.geopatrol.utils.PhotoFileUtils;
 import com.al.app.geopatrol.utils.PublicWay;
+import com.al.app.geopatrol.utils.Res;
+import com.al.app.geopatrol.utils.SpinerPopWindow;
 import com.al.app.geopatrol.widget.PictureView;
 import com.esri.android.map.GraphicsLayer;
 import com.esri.android.map.MapView;
@@ -87,29 +77,22 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.OutputStream;
 import java.lang.reflect.Method;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.net.URLConnection;
-import java.net.URLEncoder;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Locale;
 import java.util.Map;
 import java.util.UUID;
 
-public class PostPatrolActivity extends AppCompatActivity {
+public class PostRiskActivity extends AppCompatActivity {
 
     private static final int RESULT_CAMERA_CAPTURE = 0x802;
     private static final int RESULT_CROP_IMAGE = 0x804;
@@ -134,10 +117,7 @@ public class PostPatrolActivity extends AppCompatActivity {
     private List<String> levelList= new ArrayList<String>();
     private TextView tv_level=null;
 
-    private int imageWidth = 1000;
-    private int imageHeight = 1000;
     private double mapScale = 8000d;
-    private Uri imageFileUri;
     GraphicsLayer graphicsLayer = new GraphicsLayer();
 
     private String imageFile = null;
@@ -146,7 +126,7 @@ public class PostPatrolActivity extends AppCompatActivity {
     Location GeoLocation=null;
     Context context;
     String recordLevel=null;
-
+    Map<String, String> recordMap = Maps.newHashMap();
     private XJRecordDao recordsDao;
     /**
      * ATTENTION: This was auto-generated to implement the App Indexing API.
@@ -167,7 +147,7 @@ public class PostPatrolActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+        toolbar.setNavigationOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
                 onBackPressed();
@@ -225,10 +205,10 @@ public class PostPatrolActivity extends AppCompatActivity {
                                     long arg3) {
                 if (arg2 == Bimp.tempSelectBitmap.size()) {
                     System.out.println("--------------------------------------------------------------");
-                    ll_popup.startAnimation(AnimationUtils.loadAnimation(PostPatrolActivity.this, R.anim.activity_translate_in));
+                    ll_popup.startAnimation(AnimationUtils.loadAnimation(PostRiskActivity.this, R.anim.activity_translate_in));
                     pop.showAtLocation(parentView, Gravity.BOTTOM, 0, 0);
                 } else {
-                    Intent intent = new Intent(PostPatrolActivity.this,
+                    Intent intent = new Intent(PostRiskActivity.this,
                             GalleryActivity.class);
                     intent.putExtra("position", "1");
                     intent.putExtra("ID", arg2);
@@ -259,49 +239,64 @@ public class PostPatrolActivity extends AppCompatActivity {
             case R.id.post_type_ck:
 
                 Toast.makeText(this, Res.getString("post_ck"), Toast.LENGTH_SHORT).show();
-
+                recordMap.put("imageType", Res.getString("post_ck"));
+                recordMap.put("troubleType","E");
                 new SendRecordsAsyncTask().execute();
 
                 return true;
             case R.id.post_type_sb:
 
                 Toast.makeText(this, Res.getString("post_s"), Toast.LENGTH_SHORT).show();
+                recordMap.put("imageType", Res.getString("post_s"));
+                recordMap.put("troubleType","D");
                 new SendRecordsAsyncTask().execute();
 
                 return true;
             case R.id.post_type_tx:
 
                 Toast.makeText(this, Res.getString("post_tx"), Toast.LENGTH_SHORT).show();
+                recordMap.put("imageType", Res.getString("post_tx"));
+                recordMap.put("troubleType","C");
                 new SendRecordsAsyncTask().execute();
 
                 return true;
             case R.id.post_type_ckq:
 
                 Toast.makeText(this, Res.getString("post_ckq"), Toast.LENGTH_SHORT).show();
+                recordMap.put("imageType", Res.getString("post_ckq"));
+                recordMap.put("troubleType","F");
                 new SendRecordsAsyncTask().execute();
 
                 return true;
             case R.id.post_type_qt:
 
                 Toast.makeText(this, Res.getString("post_qt"), Toast.LENGTH_SHORT).show();
+                recordMap.put("imageType", Res.getString("post_qt"));
+                recordMap.put("troubleType","H");
                 new SendRecordsAsyncTask().execute();
 
                 return true;
             case R.id.post_type_wz:
 
                 Toast.makeText(this, Res.getString("post_wz"), Toast.LENGTH_SHORT).show();
+                recordMap.put("imageType", Res.getString("post_wz"));
+                recordMap.put("troubleType","B");
                 new SendRecordsAsyncTask().execute();
 
                 return true;
             case R.id.post_type_sg:
 
                 Toast.makeText(this, Res.getString("post_sg"), Toast.LENGTH_SHORT).show();
+                recordMap.put("imageType", Res.getString("post_sg"));
+                recordMap.put("troubleType","A");
                 new SendRecordsAsyncTask().execute();
 
                 return true;
             case R.id.post_type_fs:
 
                 Toast.makeText(this, Res.getString("post_fs"), Toast.LENGTH_SHORT).show();
+                recordMap.put("imageType", Res.getString("post_fs"));
+                recordMap.put("troubleType","G");
                 new SendRecordsAsyncTask().execute();
 
                 return true;
@@ -347,7 +342,7 @@ public class PostPatrolActivity extends AppCompatActivity {
     }
     public void Init() {
 
-        pop = new PopupWindow(PostPatrolActivity.this);
+        pop = new PopupWindow(PostRiskActivity.this);
 
         View view = getLayoutInflater().inflate(R.layout.item_popupwindows, null);
 
@@ -385,9 +380,9 @@ public class PostPatrolActivity extends AppCompatActivity {
         });
         bt2.setOnClickListener(new OnClickListener() {
             public void onClick(View v) {
-                Intent intent = new Intent(PostPatrolActivity.this,
+                Intent intent = new Intent(PostRiskActivity.this,
                         AlbumActivity.class);
-                intent.putExtra("activityName", "PostPatrolActivity");
+                intent.putExtra("activityName", "PostRiskActivity");
                 startActivity(intent);
                 overridePendingTransition(R.anim.activity_translate_in, R.anim.activity_translate_out);
                 pop.dismiss();
@@ -412,10 +407,10 @@ public class PostPatrolActivity extends AppCompatActivity {
                                     long arg3) {
                 if (arg2 == Bimp.tempSelectBitmap.size()) {
                     Log.i("ddddddd", "----------");
-                    ll_popup.startAnimation(AnimationUtils.loadAnimation(PostPatrolActivity.this,R.anim.activity_translate_in));
+                    ll_popup.startAnimation(AnimationUtils.loadAnimation(PostRiskActivity.this,R.anim.activity_translate_in));
                     pop.showAtLocation(parentView, Gravity.BOTTOM, 0, 0);
                 } else {
-                    Intent intent = new Intent(PostPatrolActivity.this,
+                    Intent intent = new Intent(PostRiskActivity.this,
                             GalleryActivity.class);
                     intent.putExtra("position", "1");
                     intent.putExtra("ID", arg2);
@@ -479,18 +474,7 @@ public class PostPatrolActivity extends AppCompatActivity {
     }
 
 
-    public static void addImageToGallery(final String filePath, final Context context) {
-
-        ContentValues values = new ContentValues();
-
-        values.put(MediaStore.Images.Media.DATE_TAKEN, System.currentTimeMillis());
-        values.put(MediaStore.Images.Media.MIME_TYPE, "image/jpeg");
-        values.put(MediaStore.MediaColumns.DATA, filePath);
-
-        context.getContentResolver().insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values);
-    }
-
-    /**
+  /**
      * 拍照
      */
     public void startCameraCapture() {
@@ -511,19 +495,18 @@ public class PostPatrolActivity extends AppCompatActivity {
         //参数
         //Looper.prepare();
 
-        Map<String, String> recordMap = Maps.newHashMap();
+        //recordMap = Maps.newHashMap();
         recordMap.put("recordID",UUID.randomUUID().toString().toUpperCase());//"39606AE7-BE36-4879-973B-F85F9A69077F");
 
         recordMap.put("employeeID", Res.getString("employeeID"));
-        recordMap.put("pipelineID", Res.getString("pipelineID"));
-        recordMap.put("instrumentID", Res.getString("instrumentID"));
-        recordMap.put("recordDate", DateUtils.formatDate("yyyy-MM-dd HH:mm:ss", new Date(System.currentTimeMillis())));
+        recordMap.put("officeId", Res.getString("sectorID"));
+
+        recordMap.put("findDate", DateUtils.formatDate("yyyy-MM-dd HH:mm:ss", new Date(System.currentTimeMillis())));
         String info=tv_exception.getText().toString();
-        recordMap.put("exception", info);
+        recordMap.put("description", info);
         if(GeoLocation!=null){
             recordMap.put("X", Double.toString(GeoLocation.getLongitude()));
             recordMap.put("Y",Double.toString(GeoLocation.getLatitude()));
-            recordMap.put("Z", Double.toString(GeoLocation.getAltitude()));
 
 
             String xy2jpmUrl=getString(R.string.xy2jpm)  +"?Longitude="+GeoLocation.getLongitude()+"&Latitude="+GeoLocation.getLatitude()+"&Tolerance=0&f=pjson" ;
@@ -549,22 +532,16 @@ public class PostPatrolActivity extends AppCompatActivity {
             //Looper.loop();
             return strer;
         }
-        //recordMap.put("X", Double.toString(112.37));
-        //recordMap.put("Y",Double.toString(37.85));
-        //recordMap.put("Z", Double.toString(12));
-       /* recordMap.put("abnormalMark", e.getAbnormalMark());
-        recordMap.put("checkMark", e.getCheckMark());
-        recordMap.put("checker", e.getChecker().getName());*/
-        recordMap.put("sector", "FA4B5503-360E-4EA4-833D-3800434B4C23");
-        recordMap.put("unit", "4847A015-A3BF-4D40-B052-01B9DD5AC441");
-        recordMap.put("picUrl", getImageNames());
+
+        recordMap.put("images", getImageNames());
+        recordMap.put("imageLabel", recordMap.get("recordID"));
         recordMap.put("xjLevel", recordLevel);
 
 
-        recordMap.put("deviceCode",Res.getString("deviceCode"));
+        recordMap.put("deviceCode", Res.getString("deviceCode"));
         System.out.println(recordMap);
         //服务器请求路径
-        String strUrlPath = getString(R.string.app_server)  +"records/" + recordMap.get("recordID");
+        String strUrlPath = getString(R.string.app_server)  +"troubles/" + recordMap.get("recordID");
         System.out.println(strUrlPath);
         String strResult= HttpUtils.submitPostData(strUrlPath, recordMap, "utf-8");
         //Looper.loop();
@@ -579,64 +556,8 @@ public class PostPatrolActivity extends AppCompatActivity {
         //此处应加判断，是穿跨越还是水保，还是违章占压。。。。
         //
         //sendCross(recordMap);
-        sendByType(recordMap,"hydraulic");//hydraulic,cross
+        //sendByType(recordMap,"hydraulic");//hydraulic,cross
         return strResult;
-    }
-
-    public String sendCross(Map<String, String> recordMap){
-        Map<String, String> crossMap = Maps.newHashMap();
-        if(recordMap.containsKey("PILE")){
-            crossMap.put("pile",recordMap.get("PILE"));
-        }
-        if(recordMap.containsKey("M")){
-            crossMap.put("mileage",recordMap.get("M"));
-        }
-        String strUrlCross = getString(R.string.app_server)  +"cross/JPM/" + crossMap.get("pile")+"/"+crossMap.get("mileage");
-
-        String cross=HttpUtils.get(strUrlCross);
-        System.out.println(cross);
-        try {
-            JSONArray jsonArray=new JSONArray(cross);
-            for(int i=0,ii=jsonArray.length();i<ii;i++){
-                JSONObject obj = jsonArray.getJSONObject(i);
-                if(i==0) {
-                    crossMap.put("crossID", obj.getString("crossID"));
-                }
-                if(obj.getString("stationEventId").equals(recordMap.get("stationID_jpm"))){
-                    crossMap.put("crossID", obj.getString("crossID"));
-                }
-            }
-
-
-        }
-        catch (JSONException e){
-            e.printStackTrace();
-        }
-
-        if(recordMap.containsKey("picUrl")){
-            crossMap.put("imageContent",recordMap.get("picUrl"));
-        }
-        if(recordMap.containsKey("exception")){
-            crossMap.put("protection",recordMap.get("exception"));
-        }
-        if(recordMap.containsKey("recordDate")){
-            crossMap.put("checkDate",recordMap.get("recordDate"));
-            crossMap.put("updateDate",recordMap.get("recordDate"));
-        }
-        System.out.println(crossMap);
-        //服务器请求路径
-        String strUrlPath = getString(R.string.app_server)  +"cross/" + crossMap.get("crossID");
-        System.out.println(strUrlPath);
-        String strResult= HttpUtils.submitPostData(strUrlPath, crossMap, "utf-8");
-        //Looper.loop();
-        if(strResult.contains("成功")){
-            crossMap.put("PostState", "0");
-        }else {
-            crossMap.put("PostState", "1");
-        }
-        //recordsDao.insertDataByMap(recordMap);
-        return strResult;
-
     }
 
     public String sendByType(Map<String, String> recordMap,String type){
@@ -703,8 +624,8 @@ public class PostPatrolActivity extends AppCompatActivity {
 
         String imageName=null;
         Map<String, String> params = new HashMap<String, String>();
-        params.put("type", "XJDB");
-        params.put("tig", "");
+        params.put("type", recordMap.get("troubleType"));
+        params.put("tig", recordMap.get("recordID"));
 
         if(bitmap!=null){
             Map<String,Bitmap> bs=new HashMap<String,Bitmap>();
@@ -893,8 +814,8 @@ public class PostPatrolActivity extends AppCompatActivity {
      */
     private void showProgressBar(){
         progressBar = new ProgressBar(this, null, android.R.attr.progressBarStyleLarge);
-        RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT,
-                ViewGroup.LayoutParams.WRAP_CONTENT);
+        RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(LayoutParams.WRAP_CONTENT,
+                LayoutParams.WRAP_CONTENT);
         params.addRule(RelativeLayout.CENTER_IN_PARENT,  RelativeLayout.TRUE);
         progressBar.setVisibility(View.VISIBLE);
         Context context = getApplicationContext();
@@ -1144,7 +1065,7 @@ public class PostPatrolActivity extends AppCompatActivity {
             mSpinerPopWindow.dismiss();
             recordLevel=String.valueOf(position);
             tv_level.setText(levelList.get(position));
-            Toast.makeText(PostPatrolActivity.this, "选择了:" + levelList.get(position),Toast.LENGTH_SHORT).show();
+            Toast.makeText(PostRiskActivity.this, "选择了:" + levelList.get(position),Toast.LENGTH_SHORT).show();
         }
     };
 

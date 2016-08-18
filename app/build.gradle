@@ -6,8 +6,8 @@ android {
 
     defaultConfig {
         applicationId "com.al.app.geopatrol"
-        minSdkVersion 15
-        targetSdkVersion 17
+        minSdkVersion 17
+        targetSdkVersion 19
         versionCode 1
         versionName "1.0"
         multiDexEnabled true

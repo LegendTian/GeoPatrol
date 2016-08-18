@@ -9,6 +9,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 
 import com.al.app.geopatrol.R;
+import com.al.app.geopatrol.utils.PatrolUtils;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -19,6 +20,7 @@ public class LoginActivity extends AppCompatActivity {
         setContentView(R.layout.activity_login);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
     }
 
     @Override

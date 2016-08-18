@@ -34,6 +34,18 @@
             android:name=".activitys.PostPatrolActivity"
             android:label="@string/title_activity_post_patrol"/>
         <activity
+            android:name=".activitys.PostRiskActivity"
+            android:label="@string/title_activity_risk_reporting"/>
+        <activity
+            android:name=".activitys.TrackRiskActivity"
+            android:label="@string/title_activity_risk_track"/>
+        <activity
+            android:name=".activitys.RiskListActivity"
+            android:theme="@style/Theme.Holo.Light.Dialog.MaxHeight"
+            android:noHistory="true"
+            android:label="@string/title_activity_risk_select">
+        </activity>
+        <activity
             android:name=".activitys.RecordsActivity"
             android:label="@string/title_activity_records"/>
         <activity
@@ -90,6 +102,11 @@
             android:exported="false"/>
         <service
             android:name=".services.TaskService"
+            android:enabled="true"
+            android:exported="false">
+        </service>
+        <service
+            android:name=".services.RiskService"
             android:enabled="true"
             android:exported="false">
         </service>

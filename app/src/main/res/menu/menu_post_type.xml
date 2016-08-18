@@ -4,40 +4,64 @@
       tools:context="com.al.app.geopatrol.activitys.PostPatrolActivity">
     <item
         android:id="@+id/post_type_ck"
-        android:icon="@mipmap/location"
-
+        android:icon="@mipmap/cross32"
+        android:orderInCategory="100"
         android:title="@string/post_ck"
 
         />
     <item
         android:id="@+id/post_type_sb"
-        android:icon="@mipmap/location"
+        android:icon="@mipmap/shuibao32"
+        android:orderInCategory="200"
         android:title="@string/post_s"
         />
 
     <item
         android:id="@+id/post_type_wz"
-        android:icon="@mipmap/location"
+        android:icon="@mipmap/weizhan32"
+        android:orderInCategory="300"
         android:title="@string/post_wz"
         />
     <item
         android:id="@+id/post_type_sg"
-        android:icon="@mipmap/location"
+        android:icon="@mipmap/shigong32"
+        android:orderInCategory="400"
         android:title="@string/post_sg"
         />
-    <item
+    <!--<item
         android:id="@+id/post_type_sz"
         android:icon="@mipmap/location"
+        android:orderInCategory="300"
         android:title="@string/post_z"
         />
     <item
         android:id="@+id/post_type_w"
         android:icon="@mipmap/location"
+        android:orderInCategory="300"
         android:title="@string/post_w"
+        />-->
+    <item
+        android:id="@+id/post_type_tx"
+        android:icon="@mipmap/location"
+        android:orderInCategory="500"
+        android:title="@string/post_tx"
+        />
+    <item
+        android:id="@+id/post_type_ckq"
+        android:icon="@mipmap/location"
+        android:orderInCategory="600"
+        android:title="@string/post_ckq"
+        />
+    <item
+        android:id="@+id/post_type_fs"
+        android:icon="@mipmap/location"
+        android:orderInCategory="700"
+        android:title="@string/post_fs"
         />
     <item
         android:id="@+id/post_type_qt"
-        android:icon="@mipmap/location"
+        android:icon="@mipmap/else32"
+        android:orderInCategory="800"
         android:title="@string/post_qt"
         />
 </menu>
